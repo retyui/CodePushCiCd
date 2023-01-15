@@ -1,0 +1,55 @@
+name: Mobile CodePush
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'android/**'
+      - 'ios/**'
+  workflow_dispatch:
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android_beta_mobile_build:
+    name: Build Non-Prod
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Dump GitHub Contexts
+        continue-on-error: true
+        run: |
+          echo '${{ toJSON(github) }}'
+          echo '${{ toJSON(job) }}'
+          echo '${{ toJSON(steps) }}'
+          echo '${{ toJSON(runner) }}'
+          echo '${{ toJSON(strategy) }}'
+          echo '${{ toJSON(matrix) }}'
+
+      - name: Yarn cache
+        uses: actions/cache@v3
+        id: node_cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+
+      - name: Install node_modules
+        run: yarn install --frozen-lockfile
+        if: steps.node_cache.outputs.cache-hit != 'true'
+
+
+      - name: Create Beta CodePush Release
+        env:
+          APPCENTER_ACCESS_TOKEN: ${{ secrets.APPCENTER_ACCESS_TOKEN }}
+          DEPLOYMENT_NAME: ${{ github.head_ref || github.ref_name }} # `head_ref` pull_request event, `ref_name` workflow_dispatch event
+          DESCRIPTION: Made by - ${{ github.actor }}
+          NODE_ENV: production
+        run: |
+          npm install -g appcenter-cli@2.12.0
+          PLATFORM=android ./scripts/codepush-non-prod.sh
+          PLATFORM=ios ./scripts/codepush-non-prod.sh
