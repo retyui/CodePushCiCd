@@ -6027,6 +6027,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-code-push-dev-menu@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-code-push-dev-menu/-/react-native-code-push-dev-menu-1.0.0.tgz#ab44058ace09921f2afe0f63c49a41d0fc77fb6b"
+  integrity sha512-8L/66VjnGB46PLL8fhEa8/eETOH7hITDL53fJ4YtgNnNc3K0mw7juPxQj0qGzYMQccOR9yf+bmCJZsVVAOMijg==
+
 react-native-code-push@^7.0.5:
   version "7.0.5"
   resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-7.0.5.tgz#17b4fb4acc6ba6616a3cb650a7bf3be9e3075938"
