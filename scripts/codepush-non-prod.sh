@@ -35,4 +35,7 @@ fi
 
 
 appcenter codepush deployment add -a "$APP_CENTER_ORG_NAME/$APP_CENTER_APP_NAME" "$DEPLOYMENT_NAME" || true # Ignore "deployment named test-build already exists" error
-appcenter codepush release-react -a "$APP_CENTER_ORG_NAME/$APP_CENTER_APP_NAME" -d "$DEPLOYMENT_NAME" --target-binary-version "*" --description "$DESCRIPTION"
+appcenter codepush release-react -a "$APP_CENTER_ORG_NAME/$APP_CENTER_APP_NAME" -d "$DEPLOYMENT_NAME" --target-binary-version "*" --description "$DESCRIPTION" --private-key-path ./certs/private.pem
+# You can omit `--private-key-path`, as code signing is optional.
+# Also don't store your private key in the repository, as it's a security risk. (I did it for the sake of simplicity)
+# Code Signing: https://learn.microsoft.com/en-us/appcenter/distribution/codepush/cli#code-signing
